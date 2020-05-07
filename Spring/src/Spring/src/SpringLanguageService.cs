@@ -2,7 +2,8 @@
 using JetBrains.Annotations;
  using JetBrains.ReSharper.Daemon.SyntaxHighlighting;
  using JetBrains.ReSharper.Host.Features.SyntaxHighlighting;
-using JetBrains.ReSharper.Psi;
+ using JetBrains.ReSharper.Plugins.Spring.Lexer;
+ using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Parsing;
 using JetBrains.ReSharper.Psi.ExtensionsAPI.Caches2;
  using JetBrains.ReSharper.Psi.Impl;
@@ -53,7 +54,7 @@ namespace JetBrains.ReSharper.Plugins.Spring
     {
       public ILexer CreateLexer(IBuffer buffer)
       {
-        return new CSharpLexer(buffer);
+        return new SpringLexer(buffer);
       }
     }
   }
