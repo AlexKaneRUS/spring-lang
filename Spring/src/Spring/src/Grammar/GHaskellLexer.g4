@@ -26,30 +26,22 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-lexer grammar HaskellLexer;
+lexer grammar GHaskellLexer;
 
-options { superClass=HaskellBaseLexer; }
+NEWLINE : ('\r'? '\n' | '\r');
 
-NEWLINE : ('\r'? '\n' | '\r') {
-    this.processNEWLINEToken();
-} ;
+TAB : [\t]+ -> channel(HIDDEN);
 
-TAB : [\t]+ {
-    this.processTABToken();
-} ;
+WS : [\u0020\u00a0\u1680\u2000\u200a\u202f\u205f\u3000]+ -> channel(HIDDEN);
 
-WS : [\u0020\u00a0\u1680\u2000\u200a\u202f\u205f\u3000]+ {
-    this.processWSToken();
-} ;
-
-COMMENT  : '--' (~[\r\n])* -> skip;
-NCOMMENT : '{-'~[#] .*? '-}' -> skip;
+COMMENT  : '--' (~[\r\n])* -> channel(HIDDEN);
+NCOMMENT : '{-'~[#] .*? '-}' -> channel(HIDDEN);
 
 OCURLY : '{';
 CCURLY : '}';
-VOCURLY : 'VOCURLY' { base.Channel = Hidden; };
-VCCURLY : 'VCCURLY' { base.Channel = Hidden; };
-SEMI    : 'SEMI'    { base.Channel = Hidden; };
+VOCURLY : 'VOCURLY' -> channel(HIDDEN);
+VCCURLY : 'VCCURLY' -> channel(HIDDEN);
+SEMI    : 'SEMI'    -> channel(HIDDEN);
 
 CASE     : 'case'    ;
 CLASS    : 'class'   ;

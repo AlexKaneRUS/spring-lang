@@ -25,7 +25,7 @@ def make_token(s):
     symbol, id = s.rsplit('=', 1)
     symbol = symbol.strip("'")
     symbol_name = symbol.upper()
-    return f'public static readonly SpringTokenType {symbol_name} = new SpringTokenType("{symbol}", {id});'
+    return f'public static readonly HaskellTokenType {symbol_name} = new HaskellTokenType("{symbol}", {id});'
     
 if __name__ == '__main__':
     for line in mapping.strip().split(', '):

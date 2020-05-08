@@ -5,14 +5,14 @@ using JetBrains.ReSharper.Psi.Parsing;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.Text;
 
-namespace JetBrains.ReSharper.Plugins.Spring.Lexer
+namespace JetBrains.ReSharper.Plugins.Haskell.Lexer
 {
-    public class SpringLeafToken : LeafElementBase, ITokenNode
+    public class HaskellLeafToken : LeafElementBase, ITokenNode
     {
         private readonly string _text;
-        private readonly SpringTokenType _type;
+        private readonly HaskellTokenType _type;
 
-        public SpringLeafToken(string text, SpringTokenType tokenType)
+        public HaskellLeafToken(string text, HaskellTokenType tokenType)
         {
             _text = text;
             _type = tokenType;

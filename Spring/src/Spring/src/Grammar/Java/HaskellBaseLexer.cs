@@ -92,15 +92,15 @@ namespace Antlr4.Runtime
 
     private void processINToken(IToken next) {
         while (!indentStack.IsEmpty() && indentStack.Peek().first() != "let") {
-            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(HaskellLexer.SEMI, "SEMI", next)));
-            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(HaskellLexer.VCCURLY, "VCCURLY", next)));
+            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(GHaskellLexer.SEMI, "SEMI", next)));
+            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(GHaskellLexer.VCCURLY, "VCCURLY", next)));
             nestedLevel--;
             indentStack.Pop();
         }
 
         if (!indentStack.IsEmpty() && indentStack.Peek().first() == "let") {
-            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(HaskellLexer.SEMI, "SEMI", next)));
-            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(HaskellLexer.VCCURLY, "VCCURLY", next)));
+            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(GHaskellLexer.SEMI, "SEMI", next)));
+            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(GHaskellLexer.VCCURLY, "VCCURLY", next)));
             nestedLevel--;
             indentStack.Pop();
         }
@@ -116,8 +116,8 @@ namespace Antlr4.Runtime
             if (nestedLevel > 0)
                 nestedLevel--;
 
-            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(HaskellLexer.SEMI, "SEMI", next)));
-            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(HaskellLexer.VCCURLY, "VCCURLY", next)));
+            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(GHaskellLexer.SEMI, "SEMI", next)));
+            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(GHaskellLexer.VCCURLY, "VCCURLY", next)));
         }
 
         while (indentCount < getSavedIndent()) {
@@ -126,16 +126,16 @@ namespace Antlr4.Runtime
                 nestedLevel--;
             }
 
-            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(HaskellLexer.SEMI, "SEMI", next)));
-            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(HaskellLexer.VCCURLY, "VCCURLY", next)));
+            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(GHaskellLexer.SEMI, "SEMI", next)));
+            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(GHaskellLexer.VCCURLY, "VCCURLY", next)));
         }
 
         if (indentCount == getSavedIndent()) {
-            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(HaskellLexer.SEMI, "SEMI", next)));
+            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(GHaskellLexer.SEMI, "SEMI", next)));
         }
 
         if (wasModuleExport) {
-            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(HaskellLexer.VCCURLY, "VCCURLY", next)));
+            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(GHaskellLexer.VCCURLY, "VCCURLY", next)));
         }
 
         startIndent = -1;
@@ -153,14 +153,14 @@ namespace Antlr4.Runtime
         int   type = next.Type;
 
         if (startIndent == -1
-            && type != HaskellLexer.NEWLINE
-            && type !=  HaskellLexer.WS
-            && type !=  HaskellLexer.TAB
-            && type != HaskellLexer.OCURLY) {
-            if (type ==  HaskellLexer.MODULE) {
+            && type != GHaskellLexer.NEWLINE
+            && type !=  GHaskellLexer.WS
+            && type !=  GHaskellLexer.TAB
+            && type != GHaskellLexer.OCURLY) {
+            if (type ==  GHaskellLexer.MODULE) {
                 moduleStartIndent = true;
                 wasModuleExport = true;
-            } if (type !=  HaskellLexer.MODULE && !moduleStartIndent) {
+            } if (type !=  GHaskellLexer.MODULE && !moduleStartIndent) {
                 startIndent = next.Column;
             } else if (lastKeyWord == "where" && moduleStartIndent) {
                 lastKeyWord = "";
@@ -169,14 +169,14 @@ namespace Antlr4.Runtime
                 moduleStartIndent = false;
                 prevWasEndl = false;
                 startIndent = next.Column;
-                tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(HaskellLexer.VOCURLY, "VOCURLY", next)));
+                tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(GHaskellLexer.VOCURLY, "VOCURLY", next)));
                 tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(type, next.Text, next)));
 
                 return tokenQueue.First.Value;
             }
         }
 
-        if (type == HaskellLexer.OCURLY) {
+        if (type == GHaskellLexer.OCURLY) {
             if (prevWasKeyWord) {
                 nestedLevel--;
                 prevWasKeyWord = false;
@@ -184,7 +184,7 @@ namespace Antlr4.Runtime
 
             if (moduleStartIndent) {
                 moduleStartIndent = false;
-                // because will be  HaskellLexer.CCURLY in the end of file
+                // because will be  GHaskellLexer.CCURLY in the end of file
                 wasModuleExport = false;
             }
 
@@ -194,21 +194,21 @@ namespace Antlr4.Runtime
 
         if (prevWasKeyWord && !prevWasEndl
             && !moduleStartIndent
-            && type !=  HaskellLexer.WS
-            && type != HaskellLexer.NEWLINE
-            && type !=  HaskellLexer.TAB
-            && type != HaskellLexer.OCURLY) {
+            && type !=  GHaskellLexer.WS
+            && type != GHaskellLexer.NEWLINE
+            && type !=  GHaskellLexer.TAB
+            && type != GHaskellLexer.OCURLY) {
             prevWasKeyWord = false;
             indentStack.Push(new Pair<String, int>(lastKeyWord, next.Column));
-            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(HaskellLexer.VOCURLY, "VOCURLY", next)));
+            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(GHaskellLexer.VOCURLY, "VOCURLY", next)));
         }
 
         if (ignoreIndent
-            && (type == HaskellLexer.WHERE
-            || type == HaskellLexer.DO
-            || type == HaskellLexer.LET
-            || type ==  HaskellLexer.OF
-            || type ==  HaskellLexer.CCURLY)
+            && (type == GHaskellLexer.WHERE
+            || type == GHaskellLexer.DO
+            || type == GHaskellLexer.LET
+            || type ==  GHaskellLexer.OF
+            || type ==  GHaskellLexer.CCURLY)
            ) {
             ignoreIndent = false;
         }
@@ -217,10 +217,10 @@ namespace Antlr4.Runtime
             && prevWasKeyWord
             && !ignoreIndent
             && indentCount <= getSavedIndent()
-            && type != HaskellLexer.NEWLINE
-            && type !=  HaskellLexer.WS) {
+            && type != GHaskellLexer.NEWLINE
+            && type !=  GHaskellLexer.WS) {
 
-            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(HaskellLexer.VOCURLY, "VOCURLY", next)));
+            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(GHaskellLexer.VOCURLY, "VOCURLY", next)));
             prevWasKeyWord = false;
             prevWasEndl = true;
         }
@@ -229,21 +229,21 @@ namespace Antlr4.Runtime
         if (pendingDent && prevWasEndl
             && !ignoreIndent
             && indentCount <= getSavedIndent()
-            && type != HaskellLexer.NEWLINE
-            && type !=  HaskellLexer.WS
-            && type != HaskellLexer.WHERE
-            && type !=  HaskellLexer.IN
-            && type != HaskellLexer.DO
-            && type !=  HaskellLexer.OF
-            && type !=  HaskellLexer.CCURLY
+            && type != GHaskellLexer.NEWLINE
+            && type !=  GHaskellLexer.WS
+            && type != GHaskellLexer.WHERE
+            && type !=  GHaskellLexer.IN
+            && type != GHaskellLexer.DO
+            && type !=  GHaskellLexer.OF
+            && type !=  GHaskellLexer.CCURLY
             && type != Eof) {
 
             while (nestedLevel > indentStack.Count) {
                 if (nestedLevel > 0)
                     nestedLevel--;
 
-                tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(HaskellLexer.SEMI, "SEMI", next)));
-                tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(HaskellLexer.VCCURLY, "VCCURLY", next)));
+                tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(GHaskellLexer.SEMI, "SEMI", next)));
+                tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(GHaskellLexer.VCCURLY, "VCCURLY", next)));
             }
 
             while (indentCount < getSavedIndent()) {
@@ -252,12 +252,12 @@ namespace Antlr4.Runtime
                     nestedLevel--;
                 }
 
-                tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(HaskellLexer.SEMI, "SEMI", next)));
-                tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(HaskellLexer.VCCURLY, "VCCURLY", next)));
+                tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(GHaskellLexer.SEMI, "SEMI", next)));
+                tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(GHaskellLexer.VCCURLY, "VCCURLY", next)));
             }
 
             if (indentCount == getSavedIndent()) {
-                tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(HaskellLexer.SEMI, "SEMI", next)));
+                tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(GHaskellLexer.SEMI, "SEMI", next)));
             }
 
             prevWasEndl = false;
@@ -271,8 +271,8 @@ namespace Antlr4.Runtime
             && !moduleStartIndent
             && !ignoreIndent
             && indentCount > getSavedIndent()
-            && type != HaskellLexer.NEWLINE
-            && type !=  HaskellLexer.WS
+            && type != GHaskellLexer.NEWLINE
+            && type !=  GHaskellLexer.WS
             && type != Eof) {
 
             prevWasKeyWord = false;
@@ -282,48 +282,48 @@ namespace Antlr4.Runtime
                 prevWasEndl = false;
             }
 
-            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(HaskellLexer.VOCURLY, "VOCURLY", next)));
+            tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(GHaskellLexer.VOCURLY, "VOCURLY", next)));
         }
 
         if (pendingDent
             && initialIndentToken == null
-            && HaskellLexer.NEWLINE != type) {
+            && GHaskellLexer.NEWLINE != type) {
             initialIndentToken = next;
         }
 
-        if (next != null && type == HaskellLexer.NEWLINE) {
+        if (next != null && type == GHaskellLexer.NEWLINE) {
             prevWasEndl = true;
         }
 
-        if (type == HaskellLexer.WHERE
-            || type == HaskellLexer.LET
-            || type == HaskellLexer.DO
-            || type ==  HaskellLexer.OF) {
-            // if next will be HaskellLexer.OCURLY need to decrement nestedLevel
+        if (type == GHaskellLexer.WHERE
+            || type == GHaskellLexer.LET
+            || type == GHaskellLexer.DO
+            || type ==  GHaskellLexer.OF) {
+            // if next will be GHaskellLexer.OCURLY need to decrement nestedLevel
             nestedLevel++;
             prevWasKeyWord = true;
             prevWasEndl = false;
             lastKeyWord = next.Text;
 
-            if (type == HaskellLexer.WHERE) {
+            if (type == GHaskellLexer.WHERE) {
                 if (!indentStack.IsEmpty() && (indentStack.Peek().first() == "do")) {
-                    tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(HaskellLexer.SEMI, "SEMI", next)));
-                    tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(HaskellLexer.VCCURLY, "VCCURLY", next)));
+                    tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(GHaskellLexer.SEMI, "SEMI", next)));
+                    tokenQueue.AddLast(new LinkedListNode<IToken>(createToken(GHaskellLexer.VCCURLY, "VCCURLY", next)));
                     indentStack.Pop();
                     nestedLevel--;
                 }
             }
         }
 
-        if (next != null && type == HaskellLexer.OCURLY) {
+        if (next != null && type == GHaskellLexer.OCURLY) {
             prevWasKeyWord = false;
         }
 
-        if (next == null || Hidden == next.Channel || HaskellLexer.NEWLINE == type) {
+        if (next == null || Hidden == next.Channel || GHaskellLexer.NEWLINE == type) {
             return next;
         }
 
-        if (type ==  HaskellLexer.IN) {
+        if (type ==  GHaskellLexer.IN) {
             processINToken(next);
         }
 

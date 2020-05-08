@@ -2,19 +2,19 @@ using JetBrains.ReSharper.Psi.Parsing;
 using JetBrains.Text;
 using Antlr4.Runtime;
 
-namespace JetBrains.ReSharper.Plugins.Spring.Lexer
+namespace JetBrains.ReSharper.Plugins.Haskell.Lexer
 {
-    public class SpringLexer : ILexer<int>
+    public class HaskellLexer : ILexer<int>
     {
-        private readonly HaskellLexer _lexer;
+        private readonly GHaskellLexer _lexer;
 
         private IToken _currentToken;
         private int _currentPosition;
 
-        public SpringLexer(IBuffer buffer)
+        public HaskellLexer(IBuffer buffer)
         {
             Buffer = buffer;
-            _lexer = new HaskellLexer(new AntlrInputStream(buffer.GetText()));
+            _lexer = new GHaskellLexer(new AntlrInputStream(buffer.GetText()));
             _currentPosition = 0;
         }
         
@@ -52,7 +52,7 @@ namespace JetBrains.ReSharper.Plugins.Spring.Lexer
         }
 
         public TokenNodeType TokenType => _currentToken.Type == -1 ? null : 
-            SpringTokenType.GetTokenType(_currentToken.Type);
+            HaskellTokenType.GetTokenType(_currentToken.Type);
 
         public int TokenStart => _currentToken.StartIndex;
 

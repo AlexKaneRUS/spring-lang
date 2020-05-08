@@ -27,6 +27,6 @@ namespace JetBrains.ReSharper.Plugins.Spring
         {
         }
 
-        public const string Spring_EXTENSION = ".hs";
+        public const string Spring_EXTENSION = ".spring";
     }
 }

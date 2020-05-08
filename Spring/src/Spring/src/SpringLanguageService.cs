@@ -2,7 +2,8 @@
 using JetBrains.Annotations;
  using JetBrains.ReSharper.Daemon.SyntaxHighlighting;
  using JetBrains.ReSharper.Host.Features.SyntaxHighlighting;
- using JetBrains.ReSharper.Plugins.Spring.Lexer;
+ using JetBrains.ReSharper.Plugins.Haskell.Lexer;
+ using JetBrains.ReSharper.Plugins.Haskell.Parser;
  using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Parsing;
 using JetBrains.ReSharper.Psi.ExtensionsAPI.Caches2;
@@ -37,7 +38,7 @@ namespace JetBrains.ReSharper.Plugins.Spring
 
     public override IParser CreateParser(ILexer lexer, IPsiModule module, IPsiSourceFile sourceFile)
     {
-      return new SpringParser(lexer);
+      return new HaskellParser(lexer);
     }
 
     public override IEnumerable<ITypeDeclaration> FindTypeDeclarations(IFile file)
@@ -54,7 +55,7 @@ namespace JetBrains.ReSharper.Plugins.Spring
     {
       public ILexer CreateLexer(IBuffer buffer)
       {
-        return new SpringLexer(buffer);
+        return new HaskellLexer(buffer);
       }
     }
   }

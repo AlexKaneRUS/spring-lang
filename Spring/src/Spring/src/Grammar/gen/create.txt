@@ -1,0 +1,64 @@
+    if (this == VARID)
+        return new HaskellVarid();    
+    if (this == CONID)
+        return new HaskellConid();    
+    if (this == ASCSYMBOL)
+        return new HaskellAscsymbol();    
+    if (this == VARSYM)
+        return new HaskellVarsym();    
+    if (this == CONSYM)
+        return new HaskellConsym();    
+    if (this == CON)
+        return new HaskellCon();    
+    if (this == VAROP)
+        return new HaskellVarop();    
+    if (this == CONOP)
+        return new HaskellConop();    
+    if (this == OP)
+        return new HaskellOp();    
+    if (this == MODULE)
+        return new HaskellModule();    
+    if (this == TYCON)
+        return new HaskellTycon();    
+    if (this == ATYPE)
+        return new HaskellAtype();    
+    if (this == TYPE)
+        return new HaskellType();    
+    if (this == CONSTR)
+        return new HaskellConstr();    
+    if (this == CONSTRS)
+        return new HaskellConstrs();    
+    if (this == SIMPLETYPE)
+        return new HaskellSimpletype();    
+    if (this == VAR)
+        return new HaskellVar();    
+    if (this == VARS)
+        return new HaskellVars();    
+    if (this == GENDECL)
+        return new HaskellGendecl();    
+    if (this == INTEGER)
+        return new HaskellInteger();    
+    if (this == PFLOAT)
+        return new HaskellPfloat();    
+    if (this == PCHAR)
+        return new HaskellPchar();    
+    if (this == PSTRING)
+        return new HaskellPstring();    
+    if (this == LITERAL)
+        return new HaskellLiteral();    
+    if (this == APAT)
+        return new HaskellApat();    
+    if (this == FUNLHS)
+        return new HaskellFunlhs();    
+    if (this == LEXP)
+        return new HaskellLexp();    
+    if (this == QOP)
+        return new HaskellQop();    
+    if (this == EXP)
+        return new HaskellExp();    
+    if (this == RHS)
+        return new HaskellRhs();    
+    if (this == DECL)
+        return new HaskellDecl();    
+    if (this == TOPDECL)
+        return new HaskellTopdecl();    
