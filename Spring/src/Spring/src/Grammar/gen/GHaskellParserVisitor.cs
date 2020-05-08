@@ -134,12 +134,6 @@ public interface IGHaskellParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitVar([NotNull] GHaskellParser.VarContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="GHaskellParser.vars"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitVars([NotNull] GHaskellParser.VarsContext context);
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="GHaskellParser.gendecl"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

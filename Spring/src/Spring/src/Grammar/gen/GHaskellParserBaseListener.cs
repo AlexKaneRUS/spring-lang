@@ -239,18 +239,6 @@ public partial class GHaskellParserBaseListener : IGHaskellParserListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitVar([NotNull] GHaskellParser.VarContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="GHaskellParser.vars"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterVars([NotNull] GHaskellParser.VarsContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="GHaskellParser.vars"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitVars([NotNull] GHaskellParser.VarsContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="GHaskellParser.gendecl"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

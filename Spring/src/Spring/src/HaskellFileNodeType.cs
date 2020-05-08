@@ -1,13 +1,21 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml;
+using Antlr4.Runtime;
+using JetBrains.Annotations;
 using JetBrains.Diagnostics;
 using JetBrains.ReSharper.Plugins.Spring;
 using JetBrains.ReSharper.Psi;
+using JetBrains.ReSharper.Psi.ExtensionsAPI.Resolve;
 using JetBrains.ReSharper.Psi.ExtensionsAPI.Tree;
 using JetBrains.ReSharper.Psi.Parsing;
+using JetBrains.ReSharper.Psi.Resolve;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.ReSharper.Psi.TreeBuilder;
 using JetBrains.Text;
 using JetBrains.Util;
+using JetBrains.Util.DataStructures;
 
 namespace JetBrains.ReSharper.Plugins.Haskell
 {
@@ -36,7 +44,7 @@ namespace JetBrains.ReSharper.Plugins.Haskell
         public static readonly HaskellCompositeNodeType
             SIMPLETYPE = new HaskellCompositeNodeType("RULE_simpletype", 15);
 
-        public static readonly HaskellCompositeNodeType VAR = new HaskellCompositeNodeType("RULE_var", 16);
+        public static readonly ContextNodeType VAR = new ContextNodeType("RULE_var", 16);
         public static readonly HaskellCompositeNodeType VARS = new HaskellCompositeNodeType("RULE_vars", 17);
         public static readonly HaskellCompositeNodeType GENDECL = new HaskellCompositeNodeType("RULE_gendecl", 18);
         public static readonly HaskellCompositeNodeType INTEGER = new HaskellCompositeNodeType("RULE_integer", 19);
@@ -45,7 +53,7 @@ namespace JetBrains.ReSharper.Plugins.Haskell
         public static readonly HaskellCompositeNodeType PSTRING = new HaskellCompositeNodeType("RULE_pstring", 22);
         public static readonly HaskellCompositeNodeType LITERAL = new HaskellCompositeNodeType("RULE_literal", 23);
         public static readonly HaskellCompositeNodeType APAT = new HaskellCompositeNodeType("RULE_apat", 24);
-        public static readonly HaskellCompositeNodeType FUNLHS = new HaskellCompositeNodeType("RULE_funlhs", 25);
+        public static readonly ContextNodeType FUNLHS = new ContextNodeType("RULE_funlhs", 25);
         public static readonly HaskellCompositeNodeType LEXP = new HaskellCompositeNodeType("RULE_lexp", 26);
         public static readonly HaskellCompositeNodeType QOP = new HaskellCompositeNodeType("RULE_qop", 27);
         public static readonly HaskellCompositeNodeType EXP = new HaskellCompositeNodeType("RULE_exp", 28);
@@ -90,8 +98,6 @@ namespace JetBrains.ReSharper.Plugins.Haskell
                 return new HaskellConstrs();
             if (this == SIMPLETYPE)
                 return new HaskellSimpletype();
-            if (this == VAR)
-                return new HaskellVar();
             if (this == VARS)
                 return new HaskellVars();
             if (this == GENDECL)
@@ -108,8 +114,6 @@ namespace JetBrains.ReSharper.Plugins.Haskell
                 return new HaskellLiteral();
             if (this == APAT)
                 return new HaskellApat();
-            if (this == FUNLHS)
-                return new HaskellFunlhs();
             if (this == LEXP)
                 return new HaskellLexp();
             if (this == QOP)
@@ -172,5 +176,249 @@ namespace JetBrains.ReSharper.Plugins.Haskell
         public override PsiLanguageType Language => SpringLanguage.Instance;
         public string ErrorDescription { get; }
         public int Length { get; }
+    }
+
+    public class ContextNodeType : CompositeNodeWithArgumentType
+    {
+        public ContextNodeType(string s, int index) : base(s, index)
+        {
+        }
+
+        public override CompositeElement Create(object userData)
+        {
+            var context = (RuleContext) userData;
+
+            if (this == HaskellCompositeNodeType.FUNLHS)
+            {
+                return new FDecl(context);
+            }
+
+            if (this == HaskellCompositeNodeType.VAR)
+            {
+                return new VarNode(context);
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
+        }
+
+        public override CompositeElement Create()
+        {
+            Assertion.Fail("This can't be");
+            return null;
+        }
+    }
+
+    public class VarNode : CompositeElement
+    {
+        public VarNode(RuleContext context)
+        {
+            Context = context;
+        }
+
+        public RuleContext Context { get; }
+
+        public string Name => (Context as GHaskellParser.VarContext)?.varid().VARID().GetText();
+        public override NodeType NodeType => HaskellCompositeNodeType.VARID;
+        public override PsiLanguageType Language => SpringLanguage.Instance;
+    }
+
+    public class FDecl : CompositeElement, IDeclaration
+    {
+        public FDecl(RuleContext context)
+        {
+            Context = context;
+            DeclaredElement = new FDeclared(this);
+        }
+
+        public RuleContext Context { get; }
+
+        public ITreeNode Child => this.Children().First();
+        public override NodeType NodeType => HaskellCompositeNodeType.FUNLHS;
+        public override PsiLanguageType Language => SpringLanguage.Instance;
+
+        public XmlNode GetXMLDoc(bool inherit)
+        {
+            return null;
+        }
+
+        public void SetName(string name)
+        {
+        }
+
+        public TreeTextRange GetNameRange()
+        {
+            return Child.GetTreeTextRange();
+        }
+
+        public bool IsSynthetic()
+        {
+            return false;
+        }
+
+        public IDeclaredElement DeclaredElement { get; }
+        public string DeclaredName => (Context as GHaskellParser.FunlhsContext)?.varid().VARID().GetText();
+    }
+
+    public class FDeclared : IDeclaredElement
+    {
+        private readonly FDecl _decl;
+
+        public FDeclared(FDecl decl)
+        {
+            _decl = decl;
+        }
+
+        public IPsiServices GetPsiServices()
+        {
+            return _decl.GetPsiServices();
+        }
+
+        public IList<IDeclaration> GetDeclarations()
+        {
+            return new List<IDeclaration> {_decl};
+        }
+
+        public IList<IDeclaration> GetDeclarationsIn(IPsiSourceFile sourceFile)
+        {
+            var file = _decl.GetSourceFile();
+
+            if (file == null || sourceFile != file)
+            {
+                return ICSharpCode.NRefactory.EmptyList<IDeclaration>.Instance;
+            }
+
+            return GetDeclarations();
+        }
+
+        public DeclaredElementType GetElementType()
+        {
+            return CLRDeclaredElementType.METHOD;
+        }
+
+        public XmlNode GetXMLDoc(bool inherit)
+        {
+            return null;
+        }
+
+        public XmlNode GetXMLDescriptionSummary(bool inherit)
+        {
+            return null;
+        }
+
+        public bool IsValid()
+        {
+            return _decl.IsValid();
+        }
+
+        public bool IsSynthetic()
+        {
+            return _decl.IsSynthetic();
+        }
+
+        public HybridCollection<IPsiSourceFile> GetSourceFiles()
+        {
+            var file = _decl.GetSourceFile();
+
+            if (file == null)
+            {
+                return HybridCollection<IPsiSourceFile>.Empty;
+            }
+
+            return new HybridCollection<IPsiSourceFile> {file};
+        }
+
+        public bool HasDeclarationsIn(IPsiSourceFile sourceFile)
+        {
+            return !GetDeclarationsIn(sourceFile).IsEmpty();
+        }
+
+        public string ShortName => _decl.DeclaredName;
+        public bool CaseSensitiveName => true;
+
+        public PsiLanguageType PresentationLanguage => SpringLanguage.Instance;
+    }
+
+    public class VarReference : TreeReferenceBase<VarNode>
+    {
+        public VarReference([NotNull] VarNode owner) : base(owner)
+        {
+        }
+        
+        public static List<IDeclaration> GetSiblingDecls(ITreeNode element)
+        {
+            var res = new List<IDeclaration>();
+            
+            if (element is HaskellTopdecl || element is HaskellDecl || element is HaskellFunlhs || element is HaskellApat)
+            {
+                res = element.Children().SelectMany(x => GetSiblingDecls(x)).ToList();
+            }
+            
+            if (element is IDeclaration d)
+            {
+                res.Add(d);
+            }
+
+            return res;
+        }
+
+        public override ResolveResultWithInfo ResolveWithoutCache()
+        {
+            var file = myOwner.GetContainingFile();
+            if (file == null)
+            {
+                return ResolveResultWithInfo.Unresolved;
+            }
+
+            foreach (var containingNode in myOwner.ContainingNodes())
+            {
+                foreach (var d in containingNode.Children().SelectMany(x => GetSiblingDecls(x)))
+                {
+                    if (d.DeclaredName == GetName())
+                    {
+                        return new ResolveResultWithInfo(new SimpleResolveResult(d.DeclaredElement),
+                            ResolveErrorType.OK);
+                    }
+                }
+            }
+
+            return ResolveResultWithInfo.Unresolved;
+        }
+
+        public override string GetName()
+        {
+            return myOwner.Name;
+        }
+
+        public override ISymbolTable GetReferenceSymbolTable(bool useReferenceName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override TreeTextRange GetTreeTextRange()
+        {
+            return myOwner.GetTreeTextRange();
+        }
+
+        public override IReference BindTo(IDeclaredElement element)
+        {
+            return this;
+        }
+
+        public override IReference BindTo(IDeclaredElement element, ISubstitution substitution)
+        {
+            return this;
+        }
+
+        public override IAccessContext GetAccessContext()
+        {
+            return new DefaultAccessContext(myOwner);
+        }
+
+        public override bool IsValid()
+        {
+            return true;
+        }
     }
 }

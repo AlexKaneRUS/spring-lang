@@ -201,16 +201,6 @@ public interface IGHaskellParserListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitVar([NotNull] GHaskellParser.VarContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="GHaskellParser.vars"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterVars([NotNull] GHaskellParser.VarsContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="GHaskellParser.vars"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitVars([NotNull] GHaskellParser.VarsContext context);
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="GHaskellParser.gendecl"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

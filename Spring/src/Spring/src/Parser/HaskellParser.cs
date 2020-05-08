@@ -15,6 +15,7 @@ using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.ExtensionsAPI.Tree;
 using JetBrains.ReSharper.Psi.Files;
 using JetBrains.ReSharper.Psi.Parsing;
+using JetBrains.ReSharper.Psi.Resolve;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.ReSharper.Psi.TreeBuilder;
 using JetBrains.Text;
@@ -104,6 +105,7 @@ namespace JetBrains.ReSharper.Plugins.Haskell.Parser
         private class HaskellDaemonProcess : IDaemonStageProcess
         {
             private readonly HaskellFile _file;
+            private readonly HaskellReferenceFactory _referenceFactory = new HaskellReferenceFactory();
 
             public HaskellDaemonProcess(IDaemonProcess process, HaskellFile file)
             {
@@ -114,7 +116,7 @@ namespace JetBrains.ReSharper.Plugins.Haskell.Parser
             public void Execute(Action<DaemonStageResult> committer)
             {
                 var highs = new List<HighlightingInfo>();
-                
+
                 foreach (var treeNode in _file.Descendants())
                 {
                     if (treeNode is HaskellErrorElement error)
@@ -123,8 +125,22 @@ namespace JetBrains.ReSharper.Plugins.Haskell.Parser
                         var range = error.GetDocumentRange().ExtendRight(error.Length);
                         highs.Add(new HighlightingInfo(range, new CSharpSyntaxError(error.ErrorDescription, range)));
                     }
+
+                    var references = _referenceFactory.GetReferences(treeNode, 
+                        ReferenceCollection.Empty);
+                    foreach (var reference in references)
+                    {
+                        if (reference.Resolve().Info.ResolveErrorType == ResolveErrorType.OK)
+                        {
+                            continue;
+                        }
+
+                        var range = reference.GetDocumentRange().TrimLeft(1);
+                        highs.Add(new HighlightingInfo(range,
+                            new CSharpSyntaxError("Undefined symbol", range)));
+                    }
                 }
-                
+
                 committer(new DaemonStageResult(highs));
             }
 

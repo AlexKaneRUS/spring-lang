@@ -73,19 +73,14 @@ constrs
     
 simpletype
     :
-    tycon var*
+    tycon varid*
     ;
     
 var	: varid ;
-
-vars
-    :
-    var (',' var)*
-    ;
     
 gendecl
     :
-    var '::' type
+    varid '::' type
     ;
     
 integer
@@ -104,22 +99,25 @@ literal : integer | pfloat | pchar | pstring;
     
 apat
     :
-    var
+    varid
     | literal
     | '_'
     ;
     
 funlhs
     :
-    var apat*
+    varid apat*
     ;
     
 lexp
     :
     LET decl* IN exp
     | IF exp THEN exp ELSE exp
+    | var (var | literal | '(' exp ')')+
     | var
     | literal
+    | '-' exp
+    | '(' exp ')'
     ;
 
 qop:    varop  | conop			 ;    
@@ -127,10 +125,7 @@ qop:    varop  | conop			 ;
 exp
     :
     lexp qop exp
-    | '-' exp
     | lexp
-    | literal
-    | var
     ;
     
 rhs

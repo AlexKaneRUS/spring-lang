@@ -167,15 +167,6 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
             return null;
         }
 
-        public override object VisitVars(GHaskellParser.VarsContext context)
-        {
-            var mark = _psiBuilder.Mark();
-            base.VisitChildren(context);
-            _psiBuilder.Done(mark, HaskellCompositeNodeType.VARS, context);
-
-            return null;
-        }
-
         public override object VisitGendecl(GHaskellParser.GendeclContext context)
         {
             var mark = _psiBuilder.Mark();
