@@ -1,5 +1,10 @@
     public override object VisitVarid(GHaskellParser.VaridContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.VARID, context);
@@ -8,6 +13,11 @@
         }    
     public override object VisitConid(GHaskellParser.ConidContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.CONID, context);
@@ -16,6 +26,11 @@
         }    
     public override object VisitAscsymbol(GHaskellParser.AscsymbolContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.ASCSYMBOL, context);
@@ -24,6 +39,11 @@
         }    
     public override object VisitVarsym(GHaskellParser.VarsymContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.VARSYM, context);
@@ -32,6 +52,11 @@
         }    
     public override object VisitConsym(GHaskellParser.ConsymContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.CONSYM, context);
@@ -40,6 +65,11 @@
         }    
     public override object VisitCon(GHaskellParser.ConContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.CON, context);
@@ -48,6 +78,11 @@
         }    
     public override object VisitVarop(GHaskellParser.VaropContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.VAROP, context);
@@ -56,6 +91,11 @@
         }    
     public override object VisitConop(GHaskellParser.ConopContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.CONOP, context);
@@ -64,6 +104,11 @@
         }    
     public override object VisitOp(GHaskellParser.OpContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.OP, context);
@@ -72,6 +117,11 @@
         }    
     public override object VisitModule(GHaskellParser.ModuleContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.MODULE, context);
@@ -80,6 +130,11 @@
         }    
     public override object VisitTycon(GHaskellParser.TyconContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.TYCON, context);
@@ -88,6 +143,11 @@
         }    
     public override object VisitAtype(GHaskellParser.AtypeContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.ATYPE, context);
@@ -96,6 +156,11 @@
         }    
     public override object VisitType(GHaskellParser.TypeContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.TYPE, context);
@@ -104,6 +169,11 @@
         }    
     public override object VisitConstr(GHaskellParser.ConstrContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.CONSTR, context);
@@ -112,6 +182,11 @@
         }    
     public override object VisitConstrs(GHaskellParser.ConstrsContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.CONSTRS, context);
@@ -120,6 +195,11 @@
         }    
     public override object VisitSimpletype(GHaskellParser.SimpletypeContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.SIMPLETYPE, context);
@@ -128,6 +208,11 @@
         }    
     public override object VisitVar(GHaskellParser.VarContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.VAR, context);
@@ -136,6 +221,11 @@
         }    
     public override object VisitVars(GHaskellParser.VarsContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.VARS, context);
@@ -144,6 +234,11 @@
         }    
     public override object VisitGendecl(GHaskellParser.GendeclContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.GENDECL, context);
@@ -152,6 +247,11 @@
         }    
     public override object VisitInteger(GHaskellParser.IntegerContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.INTEGER, context);
@@ -160,6 +260,11 @@
         }    
     public override object VisitPfloat(GHaskellParser.PfloatContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.PFLOAT, context);
@@ -168,6 +273,11 @@
         }    
     public override object VisitPchar(GHaskellParser.PcharContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.PCHAR, context);
@@ -176,6 +286,11 @@
         }    
     public override object VisitPstring(GHaskellParser.PstringContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.PSTRING, context);
@@ -184,6 +299,11 @@
         }    
     public override object VisitLiteral(GHaskellParser.LiteralContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.LITERAL, context);
@@ -192,6 +312,11 @@
         }    
     public override object VisitApat(GHaskellParser.ApatContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.APAT, context);
@@ -200,6 +325,11 @@
         }    
     public override object VisitFunlhs(GHaskellParser.FunlhsContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.FUNLHS, context);
@@ -208,6 +338,11 @@
         }    
     public override object VisitLexp(GHaskellParser.LexpContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.LEXP, context);
@@ -216,6 +351,11 @@
         }    
     public override object VisitQop(GHaskellParser.QopContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.QOP, context);
@@ -224,6 +364,11 @@
         }    
     public override object VisitExp(GHaskellParser.ExpContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.EXP, context);
@@ -232,6 +377,11 @@
         }    
     public override object VisitRhs(GHaskellParser.RhsContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.RHS, context);
@@ -240,6 +390,11 @@
         }    
     public override object VisitDecl(GHaskellParser.DeclContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.DECL, context);
@@ -248,6 +403,11 @@
         }    
     public override object VisitTopdecl(GHaskellParser.TopdeclContext context)
         {
+            if (context.exception != null) 
+            {
+                return Unit.Instance;
+            }
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.TOPDECL, context);

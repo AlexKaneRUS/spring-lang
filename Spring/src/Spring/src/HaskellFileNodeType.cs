@@ -5,6 +5,7 @@ using System.Xml;
 using Antlr4.Runtime;
 using JetBrains.Annotations;
 using JetBrains.Diagnostics;
+using JetBrains.ReSharper.Plugins.Haskell.Lexer;
 using JetBrains.ReSharper.Plugins.Spring;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.ExtensionsAPI.Resolve;
@@ -234,7 +235,9 @@ namespace JetBrains.ReSharper.Plugins.Haskell
 
         public RuleContext Context { get; }
 
-        public ITreeNode Child => this.Children().First();
+        public ITreeNode Child => this.Children().ToList().Find(x => x is HaskellVarid).Children().
+            ToList().Find(x => 
+            x is HaskellLeafToken leaf && leaf.NodeType == HaskellTokenType.VARID);
         public override NodeType NodeType => HaskellCompositeNodeType.FUNLHS;
         public override PsiLanguageType Language => SpringLanguage.Instance;
 
@@ -258,7 +261,8 @@ namespace JetBrains.ReSharper.Plugins.Haskell
         }
 
         public IDeclaredElement DeclaredElement { get; }
-        public string DeclaredName => (Context as GHaskellParser.FunlhsContext)?.varid().VARID().GetText();
+
+        public string DeclaredName => Child.GetText();
     }
 
     public class FDeclared : IDeclaredElement
@@ -342,8 +346,12 @@ namespace JetBrains.ReSharper.Plugins.Haskell
 
     public class VarReference : TreeReferenceBase<VarNode>
     {
+        private ITreeNode Child;
+        
         public VarReference([NotNull] VarNode owner) : base(owner)
         {
+            Child = owner.Children().ToList().Find(x => x is HaskellVarid).Children().ToList().Find(x => 
+                x is HaskellLeafToken leaf && leaf.NodeType == HaskellTokenType.VARID);
         }
         
         public static List<IDeclaration> GetSiblingDecls(ITreeNode element)
@@ -388,7 +396,7 @@ namespace JetBrains.ReSharper.Plugins.Haskell
 
         public override string GetName()
         {
-            return myOwner.Name;
+            return Child.GetText();
         }
 
         public override ISymbolTable GetReferenceSymbolTable(bool useReferenceName)
@@ -398,7 +406,7 @@ namespace JetBrains.ReSharper.Plugins.Haskell
 
         public override TreeTextRange GetTreeTextRange()
         {
-            return myOwner.GetTreeTextRange();
+            return Child.GetTreeTextRange();
         }
 
         public override IReference BindTo(IDeclaredElement element)

@@ -34,6 +34,11 @@ def gen_class(name_upper):
     res3 = '''\
     public override object Visit{}(GHaskellParser.{}Context context)
         {{
+            if (context.exception != null) 
+            {{
+                return Unit.Instance;
+            }}
+                     
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.{}, context);

@@ -1,5 +1,6 @@
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
+using JetBrains.Core;
 using JetBrains.ReSharper.Plugins.Haskell;
 using JetBrains.ReSharper.Psi.TreeBuilder;
 
@@ -16,6 +17,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitVarid(GHaskellParser.VaridContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.VARID, context);
@@ -25,6 +31,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitConid(GHaskellParser.ConidContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.CONID, context);
@@ -34,6 +45,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitAscSymbol(GHaskellParser.AscSymbolContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.ASCSYMBOL, context);
@@ -43,6 +59,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitVarsym(GHaskellParser.VarsymContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.VARSYM, context);
@@ -52,6 +73,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitConsym(GHaskellParser.ConsymContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.CONSYM, context);
@@ -61,6 +87,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitCon(GHaskellParser.ConContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.CON, context);
@@ -70,6 +101,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitVarop(GHaskellParser.VaropContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.VAROP, context);
@@ -79,6 +115,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitConop(GHaskellParser.ConopContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.CONOP, context);
@@ -88,6 +129,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitOp(GHaskellParser.OpContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.OP, context);
@@ -97,6 +143,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitModule(GHaskellParser.ModuleContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.MODULE, context);
@@ -106,6 +157,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitTycon(GHaskellParser.TyconContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.TYCON, context);
@@ -115,6 +171,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitAtype(GHaskellParser.AtypeContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.ATYPE, context);
@@ -124,6 +185,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitType(GHaskellParser.TypeContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.TYPE, context);
@@ -133,6 +199,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitConstr(GHaskellParser.ConstrContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.CONSTR, context);
@@ -142,6 +213,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitConstrs(GHaskellParser.ConstrsContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.CONSTRS, context);
@@ -151,6 +227,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitSimpletype(GHaskellParser.SimpletypeContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.SIMPLETYPE, context);
@@ -160,6 +241,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitVar(GHaskellParser.VarContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.VAR, context);
@@ -169,6 +255,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitGendecl(GHaskellParser.GendeclContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.GENDECL, context);
@@ -178,6 +269,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitInteger(GHaskellParser.IntegerContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.INTEGER, context);
@@ -187,6 +283,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitPfloat(GHaskellParser.PfloatContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.PFLOAT, context);
@@ -196,6 +297,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitPchar(GHaskellParser.PcharContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.PCHAR, context);
@@ -205,6 +311,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitPstring(GHaskellParser.PstringContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.PSTRING, context);
@@ -214,6 +325,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitLiteral(GHaskellParser.LiteralContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.LITERAL, context);
@@ -223,6 +339,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitApat(GHaskellParser.ApatContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.APAT, context);
@@ -232,6 +353,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitFunlhs(GHaskellParser.FunlhsContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.FUNLHS, context);
@@ -241,6 +367,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitLexp(GHaskellParser.LexpContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.LEXP, context);
@@ -250,6 +381,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitQop(GHaskellParser.QopContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.QOP, context);
@@ -259,6 +395,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitExp(GHaskellParser.ExpContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.EXP, context);
@@ -268,6 +409,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitRhs(GHaskellParser.RhsContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.RHS, context);
@@ -277,6 +423,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitDecl(GHaskellParser.DeclContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.DECL, context);
@@ -286,6 +437,11 @@ namespace JetBrains.ReSharper.Plugins.Spring.Parser
 
         public override object VisitTopdecl(GHaskellParser.TopdeclContext context)
         {
+            if (context.exception != null)
+            {
+                return Unit.Instance;
+            }
+
             var mark = _psiBuilder.Mark();
             base.VisitChildren(context);
             _psiBuilder.Done(mark, HaskellCompositeNodeType.TOPDECL, context);

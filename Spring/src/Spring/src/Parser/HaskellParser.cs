@@ -135,7 +135,7 @@ namespace JetBrains.ReSharper.Plugins.Haskell.Parser
                             continue;
                         }
 
-                        var range = reference.GetDocumentRange().TrimLeft(1);
+                        var range = reference.GetDocumentRange();
                         highs.Add(new HighlightingInfo(range,
                             new CSharpSyntaxError("Undefined symbol", range)));
                     }
